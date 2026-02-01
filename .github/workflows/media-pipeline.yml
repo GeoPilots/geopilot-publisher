@@ -1,0 +1,37 @@
+name: Media Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Upload to YouTube (true/false)"
+        required: true
+        default: "false"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install google-auth-oauthlib google-api-python-client
+
+      - name: Run pipeline
+        env:
+          # These will be used later by your service clients
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+        run: |
+          python -m geopilot_publisher.pipeline.run --publish "${{ inputs.publish }}"

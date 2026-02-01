@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geopilot-publisher"
+version = "0.1.0"
+description = "GeoPilot Publisher: CI/CD media pipeline for automated content publishing."
+requires-python = ">=3.10"
+
+dependencies = [
+  "google-auth-oauthlib>=1.2.0",
+  "google-api-python-client>=2.120.0",
+]
+
+[tool.setuptools]
+packages = ["geopilot_publisher"]

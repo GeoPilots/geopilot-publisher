@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+.env
+.env.*
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+
+# macOS
+.DS_Store
+
+# Secrets / OAuth
+bootstrap/client_secret.json
+bootstrap/*.json
+
+# Artifacts (keep folder, not outputs)
+artifacts/*
+!artifacts/.gitkeep
+
+# Media (optional; keep templates, not generated video/audio)
+*.mp4
+*.mp3
+*.wav

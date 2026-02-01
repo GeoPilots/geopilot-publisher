@@ -1,0 +1,3 @@
+Write a 45-60 second script in the Calm Analyst voice.
+Rules: short sentences, conversational, no hype, no emojis, no fearmongering.
+Output plain text only.
