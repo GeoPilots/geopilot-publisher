@@ -39,6 +39,15 @@ jobs:
         run: |
           python -m geopilot_publisher.pipeline.run --publish "${{ inputs.publish }}"
 
+      - name: List artifacts
+        run: |
+          echo "=== artifacts contents ==="
+          ls -lah artifacts || true
+
+      - name: Verify video exists
+        run: |
+          test -f artifacts/video.mp4 && echo "✅ video.mp4 exists" || (echo "❌ video.mp4 missing" && exit 1)
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
