@@ -9,28 +9,27 @@ from geopilot_publisher.stages.generate_script import generate_script
 from geopilot_publisher.stages.tts import synthesize_voice
 from geopilot_publisher.stages.render_video import render_video
 from geopilot_publisher.stages.upload_youtube import upload_video
+from geopilot_publisher.utils.captions import build_captions_from_script, write_srt
 
 
 def run_all(publish: bool = False) -> None:
-    # Ensure artifacts directory exists
     artifacts_dir = Path("artifacts")
     artifacts_dir.mkdir(exist_ok=True)
 
-    # 1. Generate idea
     idea = generate_ideas()
-
-    # 2. Generate script
     script = generate_script(idea)
 
-    # Save script as an artifact so we can inspect it in CI
+    # Save script artifact
     (artifacts_dir / "script.txt").write_text(script, encoding="utf-8")
 
-    # 3. Generate voice audio from script
+    # Build captions from the script and save SRT
+    captions = build_captions_from_script(script)
+    write_srt(captions, artifacts_dir / "captions.srt")
+
     audio_path = synthesize_voice(script)
 
-    # 4. Render video (still placeholder/minimal for now)
+    # Render video (will burn captions if captions.srt exists)
     video_path = render_video(script, audio_path)
 
-    # 5. Optionally upload
     if publish:
         upload_video(video_path)
