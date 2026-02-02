@@ -2,6 +2,7 @@
 Orchestration layer: orders the stages and passes artifacts between them.
 """
 
+import os
 from pathlib import Path
 
 from geopilot_publisher.stages.generate_ideas import generate_ideas
@@ -9,26 +10,29 @@ from geopilot_publisher.stages.generate_script import generate_script
 from geopilot_publisher.stages.tts import synthesize_voice
 from geopilot_publisher.stages.render_video import render_video
 from geopilot_publisher.stages.upload_youtube import upload_video
-from geopilot_publisher.utils.captions import build_captions_from_script, write_srt
+
 
 
 def run_all(publish: bool = False) -> None:
     artifacts_dir = Path("artifacts")
     artifacts_dir.mkdir(exist_ok=True)
 
-    idea = generate_ideas()
-    script = generate_script(idea)
+    reuse = os.getenv("GP_REUSE_SCRIPT") == "1"
+    script_path = artifacts_dir / "script.txt"
+    audio_path = artifacts_dir / "voice.mp3"
 
-    # Save script artifact
-    (artifacts_dir / "script.txt").write_text(script, encoding="utf-8")
+    if reuse:
+        if not script_path.exists() or not audio_path.exists():
+            raise RuntimeError(
+                "GP_REUSE_SCRIPT=1 requires artifacts/script.txt and artifacts/voice.mp3"
+            )
+        script = script_path.read_text(encoding="utf-8")
+    else:
+        idea = generate_ideas()
+        script = generate_script(idea)
+        script_path.write_text(script, encoding="utf-8")
+        audio_path = Path(synthesize_voice(script))
 
-    # Build captions from the script and save SRT
-    captions = build_captions_from_script(script)
-    write_srt(captions, artifacts_dir / "captions.srt")
-
-    audio_path = synthesize_voice(script)
-
-    # Render video (will burn captions if captions.srt exists)
     video_path = render_video(script, audio_path)
 
     if publish:
