@@ -20,6 +20,7 @@ def run_all(publish: bool = False) -> None:
     reuse = os.getenv("GP_REUSE_SCRIPT") == "1"
     script_path = artifacts_dir / "script.txt"
     audio_path = artifacts_dir / "voice.mp3"
+    keywords_path = artifacts_dir / "keywords.txt"
 
     if reuse:
         if not script_path.exists() or not audio_path.exists():
@@ -33,7 +34,15 @@ def run_all(publish: bool = False) -> None:
         script_path.write_text(script, encoding="utf-8")
         audio_path = Path(synthesize_voice(script))
 
+    if publish and (not keywords_path.exists() or not keywords_path.read_text(encoding="utf-8").strip()):
+        raise RuntimeError(
+            "Publish requested but artifacts/keywords.txt is missing or empty. "
+            "CI runs clean; add keywords.txt to artifacts before publishing."
+        )
+
     video_path = render_video(script, audio_path)
 
     if publish:
         upload_video(video_path)
+    else:
+        print(f"[dry-run] would upload: {video_path}")

@@ -9,12 +9,13 @@ from geopilot_publisher.pipeline.stages import run_all
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument("--publish", default="false", choices=["true", "false"])
+    p.add_argument("--publish", default="false")
     return p.parse_args()
 
 def main():
     args = parse_args()
-    publish = args.publish.lower() == "true"
+    publish = str(args.publish).strip().lower() in {"true", "1", "yes", "y"}
+    print(f"[pipeline] publish={publish} (raw={args.publish})")
     run_all(publish=publish)
 
 if __name__ == "__main__":

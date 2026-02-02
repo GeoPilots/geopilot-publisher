@@ -55,6 +55,8 @@ def upload_video(video_path: str) -> str:
         raise RuntimeError(f"Video file is empty: {path}")
 
     print(f"[upload_youtube] uploading file: {path} ({size} bytes)")
+    print("[upload_youtube] privacy=unlisted (video won't appear on public channel page)")
+    print("[upload_youtube] find it in YouTube Studio → Content → Unlisted")
 
     # Minimal safe defaults (we can later make these dynamic from script/idea)
     title = "GeoPilot Publisher Test"

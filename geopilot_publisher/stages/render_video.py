@@ -70,7 +70,7 @@ def render_video(script: str, audio_path: str) -> str:
 
     base_bg = _build_background(W, H, bg_top, bg_bottom, grid_color)
     keywords = _load_keywords(Path("artifacts") / "keywords.txt")
-    keyword_font = _load_keyword_font(size=34)
+    keyword_font = _load_keyword_font(size=42)
     keyword_nodes = _init_keyword_nodes(
         script,
         keywords,
@@ -319,8 +319,8 @@ def _init_keyword_nodes(
         w, h = _measure_text(dummy, text, font, tracking)
         vx = rng.uniform(-0.6, 0.6)
         vy = rng.uniform(-0.3, 0.3)
-        base_opacity = rng.uniform(0.13, 0.15)
-        peak_opacity = rng.uniform(0.70, 0.74)
+        base_opacity = rng.uniform(0.14, 0.18)
+        peak_opacity = rng.uniform(0.88, 0.92)
         nodes.append(
             {
                 "text": text,
