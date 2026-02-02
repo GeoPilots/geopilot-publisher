@@ -31,6 +31,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg fonts-dejavu-core
 
+      - name: Ensure keywords for publish
+        if: ${{ inputs.publish == 'true' }}
+        run: |
+          if [ -f content/keywords.txt ]; then
+            mkdir -p artifacts
+            cp content/keywords.txt artifacts/keywords.txt
+            echo "Copied content/keywords.txt -> artifacts/keywords.txt"
+          fi
+          if [ ! -s artifacts/keywords.txt ]; then
+            echo "Missing artifacts/keywords.txt for publish=true. Add content/keywords.txt."
+            exit 1
+          fi
+
       - name: Run pipeline
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
