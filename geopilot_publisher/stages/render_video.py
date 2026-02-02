@@ -454,21 +454,20 @@ def _nearest_particle_index(x: float, y: float, particles: list[list[float]]) ->
 
 
 def _load_keyword_font(size: int) -> ImageFont.ImageFont:
-    candidates = [
-        os.getenv("GEOPILOT_FONT", ""),
-        "/System/Library/Fonts/SFNSDisplay-Medium.otf",
-        "/System/Library/Fonts/SFNSDisplay.ttf",
-        "/System/Library/Fonts/HelveticaNeue.ttc",
-        "/Library/Fonts/Helvetica Neue Medium.ttf",
-        "/Library/Fonts/HelveticaNeue.ttf",
-    ]
+    env_path = os.getenv("GEOPILOT_FONT", "")
+    default_path = Path("assets/fonts/Inter-Regular.ttf")
+    candidates = [env_path, str(default_path)]
+
     for path in candidates:
         if path and Path(path).exists():
             try:
                 return ImageFont.truetype(path, size=size)
-            except Exception:
-                continue
-    return ImageFont.load_default()
+            except Exception as exc:
+                raise RuntimeError(f"Failed to load font: {path}") from exc
+
+    raise RuntimeError(
+        "No usable font found. Set GEOPILOT_FONT or add assets/fonts/Inter-Regular.ttf"
+    )
 
 
 def _draw_text_with_tracking(
