@@ -1,3 +1,4 @@
+import hashlib
 import os
 import re
 from pathlib import Path
@@ -47,13 +48,19 @@ def upload_video(video_path: str) -> str:
     Default privacy is 'unlisted' (safe).
     """
     path = Path(video_path)
+    script_path = Path("artifacts") / "script.txt"
 
     if not path.exists():
         raise RuntimeError(f"Video file does not exist: {path}")
+    if not script_path.exists():
+        raise RuntimeError("Missing artifacts/script.txt for upload")
 
     size = path.stat().st_size
     if size <= 0:
         raise RuntimeError(f"Video file is empty: {path}")
+    if (Path.cwd() / "artifacts" / "video.mp4") != path:
+        # Ensure the expected artifact is being uploaded
+        raise RuntimeError(f"Unexpected video path for upload: {path}")
 
     print(f"[upload_youtube] uploading file: {path} ({size} bytes)")
     print("[upload_youtube] privacy=unlisted (video won't appear on public channel page)")
@@ -171,6 +178,9 @@ def _build_title(script_text: str, keywords: list[str]) -> str:
         words = script_text.replace("\n", " ").split()
         angle = " ".join(words[5:10]).strip()
     title = f"{primary}: {angle}" if angle else primary
+    if script_text:
+        short_hash = hashlib.sha256(script_text.encode("utf-8")).hexdigest()[:12]
+        title = f"{title} [{short_hash}]"
     title = re.sub(r"\s+", " ", title).strip()
     if len(title) > 70:
         title = title[:70].rstrip(" :,-")

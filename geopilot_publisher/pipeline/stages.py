@@ -2,6 +2,7 @@
 Orchestration layer: orders the stages and passes artifacts between them.
 """
 
+import hashlib
 import os
 from pathlib import Path
 
@@ -36,8 +37,17 @@ def run_all(publish: bool = False) -> None:
                 "GP_USE_CONTENT=1 requires non-empty content/script.txt and content/keywords.txt"
             )
         script = content_script.read_text(encoding="utf-8")
+        keywords_text = content_keywords.read_text(encoding="utf-8")
         script_path.write_text(script, encoding="utf-8")
-        keywords_path.write_text(content_keywords.read_text(encoding="utf-8"), encoding="utf-8")
+        keywords_path.write_text(keywords_text, encoding="utf-8")
+        if script_path.read_text(encoding="utf-8") != script:
+            raise RuntimeError("GP_USE_CONTENT=1 script copy verification failed")
+        script_preview = " ".join(script.strip().split())[:80]
+        script_hash = hashlib.sha256(script.encode("utf-8")).hexdigest()[:12]
+        keyword_count = len([line for line in keywords_text.splitlines() if line.strip()])
+        print(f"[content] script preview: {script_preview}")
+        print(f"[content] script sha256: {script_hash}")
+        print(f"[content] keywords: {keyword_count}")
         audio_path = Path(synthesize_voice(script))
     elif reuse:
         if not script_path.exists() or not audio_path.exists():
