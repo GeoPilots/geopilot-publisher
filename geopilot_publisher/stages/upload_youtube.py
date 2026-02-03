@@ -58,9 +58,8 @@ def upload_video(video_path: str) -> str:
     size = path.stat().st_size
     if size <= 0:
         raise RuntimeError(f"Video file is empty: {path}")
-    if (Path.cwd() / "artifacts" / "video.mp4") != path:
-        # Ensure the expected artifact is being uploaded
-        raise RuntimeError(f"Unexpected video path for upload: {path}")
+    if path.suffix.lower() != ".mp4":
+        raise RuntimeError(f"Unexpected video extension for upload: {path.suffix}")
 
     print(f"[upload_youtube] uploading file: {path} ({size} bytes)")
     print("[upload_youtube] privacy=unlisted (video won't appear on public channel page)")
