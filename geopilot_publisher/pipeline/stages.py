@@ -17,12 +17,29 @@ def run_all(publish: bool = False) -> None:
     artifacts_dir = Path("artifacts")
     artifacts_dir.mkdir(exist_ok=True)
 
+    use_content = os.getenv("GP_USE_CONTENT") == "1"
     reuse = os.getenv("GP_REUSE_SCRIPT") == "1"
     script_path = artifacts_dir / "script.txt"
     audio_path = artifacts_dir / "voice.mp3"
     keywords_path = artifacts_dir / "keywords.txt"
+    content_script = Path("content") / "script.txt"
+    content_keywords = Path("content") / "keywords.txt"
 
-    if reuse:
+    if use_content:
+        if (
+            not content_script.exists()
+            or not content_keywords.exists()
+            or not content_script.read_text(encoding="utf-8").strip()
+            or not content_keywords.read_text(encoding="utf-8").strip()
+        ):
+            raise RuntimeError(
+                "GP_USE_CONTENT=1 requires non-empty content/script.txt and content/keywords.txt"
+            )
+        script = content_script.read_text(encoding="utf-8")
+        script_path.write_text(script, encoding="utf-8")
+        keywords_path.write_text(content_keywords.read_text(encoding="utf-8"), encoding="utf-8")
+        audio_path = Path(synthesize_voice(script))
+    elif reuse:
         if not script_path.exists() or not audio_path.exists():
             raise RuntimeError(
                 "GP_REUSE_SCRIPT=1 requires artifacts/script.txt and artifacts/voice.mp3"
