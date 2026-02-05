@@ -1,67 +1,81 @@
-Why AI Fails Outside the Data It Was Trained On
+AI Can Predict Behavior — Not Intent
 
-AI can be incredibly accurate.
-Until it isn’t.
+AI is getting very good at predicting what people will do.
 
-And when it fails, it often fails quietly — without warning.
+What you’ll click.
+What you’ll buy.
+What you’re likely to watch next.
 
-Most AI systems don’t actually understand the world.
-They learn patterns from data.
-And those patterns only exist inside the space the model was trained on.
+But there’s something AI still doesn’t understand.
 
-This is called the training distribution.
+Intent.
 
-When the world behaves the way the data expects, AI performs well.
-But when conditions change — even slightly — those patterns can break.
+Most AI systems learn from past behavior.
+They look for patterns across large datasets and use those patterns to make predictions.
 
-This problem is known as generalization.
+If you’ve done something before, the model assumes you’re likely to do it again.
 
-AI models assume the future will look like the past.
-But in real life, that assumption is fragile.
+And statistically, that often works.
 
-Accents change.
-Behavior evolves.
-Markets shift.
-Policies change.
-Contexts drift.
+But behavior and intent are not the same thing.
 
-A model trained on yesterday’s data may struggle tomorrow — not because it’s broken, but because it’s seeing something new.
+People act for many reasons.
+Habit. Convenience. Pressure. Emotion. Timing.
 
-Consider voice recognition.
+Two people can take the same action for completely different reasons.
 
-A system trained mostly on one group of speakers can perform extremely well in testing.
-But introduce new accents, speech rhythms, or environments, and accuracy drops.
+AI doesn’t see reasons.
+It sees outcomes.
 
-The model isn’t confused.
-It’s simply operating outside the data it knows.
+When a model predicts behavior, it isn’t asking why someone acted.
+It’s estimating what is likely to happen next.
 
-The same thing happens in behavior prediction.
+That distinction matters.
 
-AI can identify patterns in past actions.
-But people don’t always behave the same way across contexts.
-Stress, incentives, culture, and environment all matter.
+Consider online recommendations.
 
-When AI is used only for suggestions, these failures are manageable.
-But when AI is used for decisions, the risks increase.
+If someone clicks on a product once, the system may assume interest.
+But the click could mean curiosity, comparison, or even a mistake.
 
-False confidence is dangerous.
+The behavior is the same.
+The intent is not.
 
-An AI system doesn’t know when it’s wrong.
-It produces outputs even when it’s uncertain — unless we design safeguards.
+The same problem appears in risk assessment, hiring tools, and fraud detection.
 
-This is why diverse data helps, but it isn’t enough.
+A pattern may look suspicious, reliable, or valuable —
+but the underlying motivation is invisible to the model.
 
-No dataset can cover every future scenario.
-No model can anticipate every shift.
+This is where false confidence creeps in.
 
-The real solution isn’t just better data.
-It’s better system design.
+When predictions are accurate most of the time,
+it’s tempting to treat them as understanding.
 
-AI works best when paired with human oversight.
-When systems are built to recognize uncertainty.
-And when automation is applied carefully, not blindly.
+But prediction without context is fragile.
 
-Understanding where AI performs well — and where it doesn’t — is essential.
+Small changes in circumstances can flip intent,
+even when behavior looks familiar.
 
-Because AI doesn’t fail at random.
-It fails outside the space it was trained to understand.
+Humans adjust naturally.
+We ask questions.
+We notice contradictions.
+We change our interpretation.
+
+AI doesn’t do that unless we design systems to support it.
+
+This doesn’t mean AI is useless.
+It means it needs boundaries.
+
+AI works best when it supports human judgment,
+not when it replaces it.
+
+Understanding intent requires context, nuance, and interpretation —
+things that don’t live neatly in data.
+
+So while AI can predict behavior with impressive accuracy,
+it still relies on us to interpret meaning.
+
+And that’s a reminder worth keeping in mind
+as we automate more decisions.
+
+Because behavior is visible.
+Intent is not.
