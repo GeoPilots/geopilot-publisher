@@ -1,81 +1,54 @@
-AI Can Predict Behavior — Not Intent
+Why More Data Doesn’t Always Fix Bias in AI
 
-AI is getting very good at predicting what people will do.
+It’s common to hear that bias in AI can be fixed with more data.
 
-What you’ll click.
-What you’ll buy.
-What you’re likely to watch next.
+And sometimes, that’s true.
 
-But there’s something AI still doesn’t understand.
+But more data doesn’t automatically mean better decisions.
 
-Intent.
+AI systems learn patterns from historical information.
+If those patterns reflect imbalances, adding more of the same data can reinforce the problem instead of solving it.
 
-Most AI systems learn from past behavior.
-They look for patterns across large datasets and use those patterns to make predictions.
+Bias isn’t always about missing data.
+Often, it’s about how the data was produced.
 
-If you’ve done something before, the model assumes you’re likely to do it again.
+Who was included.
+Who was excluded.
+And under what conditions the data was collected.
 
-And statistically, that often works.
+For example, consider a model trained to evaluate job candidates.
 
-But behavior and intent are not the same thing.
+If past hiring decisions favored certain backgrounds,
+the model may learn to associate success with those patterns.
 
-People act for many reasons.
-Habit. Convenience. Pressure. Emotion. Timing.
+Adding more resumes doesn’t change that logic
+if the underlying process remains biased.
 
-Two people can take the same action for completely different reasons.
+The same issue appears in lending, healthcare, and risk assessment.
 
-AI doesn’t see reasons.
-It sees outcomes.
+More data improves confidence,
+but confidence isn’t the same as correctness.
 
-When a model predicts behavior, it isn’t asking why someone acted.
-It’s estimating what is likely to happen next.
+Another challenge is that bias can be contextual.
 
-That distinction matters.
+A model might perform fairly in one environment
+and behave very differently in another.
 
-Consider online recommendations.
+This is because AI doesn’t understand fairness.
+It optimizes for patterns, not principles.
 
-If someone clicks on a product once, the system may assume interest.
-But the click could mean curiosity, comparison, or even a mistake.
+Reducing bias requires more than scale.
 
-The behavior is the same.
-The intent is not.
+It requires:
+	•	understanding how data was generated
+	•	questioning which signals matter
+	•	and deciding when automation should be limited
 
-The same problem appears in risk assessment, hiring tools, and fraud detection.
+Sometimes the right solution isn’t adding data.
+It’s redesigning the system.
 
-A pattern may look suspicious, reliable, or valuable —
-but the underlying motivation is invisible to the model.
+AI works best when data quality, context, and human oversight
+are treated as first-class concerns.
 
-This is where false confidence creeps in.
-
-When predictions are accurate most of the time,
-it’s tempting to treat them as understanding.
-
-But prediction without context is fragile.
-
-Small changes in circumstances can flip intent,
-even when behavior looks familiar.
-
-Humans adjust naturally.
-We ask questions.
-We notice contradictions.
-We change our interpretation.
-
-AI doesn’t do that unless we design systems to support it.
-
-This doesn’t mean AI is useless.
-It means it needs boundaries.
-
-AI works best when it supports human judgment,
-not when it replaces it.
-
-Understanding intent requires context, nuance, and interpretation —
-things that don’t live neatly in data.
-
-So while AI can predict behavior with impressive accuracy,
-it still relies on us to interpret meaning.
-
-And that’s a reminder worth keeping in mind
-as we automate more decisions.
-
-Because behavior is visible.
-Intent is not.
+Because bias isn’t just a data problem.
+It’s a design problem.
